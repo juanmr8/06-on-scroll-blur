@@ -9,9 +9,14 @@ const gtAmerica = localFont({
 	variable: '--font-display',
 });
 
-const geistMono = Geist_Mono({
+const headingFont = localFont({
+	src: '../public/font-heading.otf',
+	variable: '--font-heading',
+});
+
+const gtMono = localFont({
+	src: '../public/font-mono.otf',
 	variable: '--font-mono',
-	subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
@@ -27,7 +32,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body
-				className={`${gtAmerica.variable} ${geistMono.variable} font-mono antialiased`}
+				className={`${gtAmerica.variable} ${gtMono.variable} font-mono antialiased`}
 			>
 				{children}
 			</body>

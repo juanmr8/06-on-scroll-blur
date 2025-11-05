@@ -1,214 +1,94 @@
+import { LenisProvider } from './lenis-provider';
+
 export default function Page() {
 	return (
-		<div className='min-h-screen p-8 md:p-16'>
-			{/* Hero Section - Clamp Mode (Stable Scaling) */}
-			<section className='mb-[var(--spacing-xl-clamp)]'>
-				<h1 className='font-display mb-[var(--spacing-md-clamp)] text-[length:var(--font-size-display-clamp)] leading-[0.9]'>
-					Scroll Blur
-				</h1>
-				<p className='text-foreground/80 max-w-2xl text-[length:var(--font-size-body-clamp)]'>
-					This heading uses <strong>clamp-based scaling</strong> - smooth and
-					predictable with hard limits (64px to 128px). Resize your browser to
-					see how it scales responsibly.
-				</p>
-			</section>
+		<LenisProvider>
+			<div className='min-h-svh bg-[#222222]'>
+				<TopSection />
+				<BottomSection />
+			</div>
+		</LenisProvider>
+	);
+}
 
-			{/* Fluid Mode Section - Dramatic Scaling */}
-			<section className='border-foreground/10 mb-[var(--spacing-xl-fluid)] border-t pt-[var(--spacing-lg-clamp)]'>
-				<h2 className='font-display mb-[var(--spacing-md-fluid)] text-[length:var(--font-size-display-fluid)] leading-[0.9]'>
-					Dramatic Scale
-				</h2>
-				<p className='text-foreground/80 max-w-2xl text-[length:var(--font-size-body-fluid)]'>
-					This heading uses <strong>fluid viewport scaling</strong> - granular
-					precision without limits. It scales more dramatically based on
-					viewport width for bold responsive effects.
-				</p>
-			</section>
-
-			{/* Comparison Grid */}
-			<section className='mb-[var(--spacing-xl-clamp)]'>
-				<h3 className='font-display mb-[var(--spacing-lg-clamp)] text-[length:var(--font-size-heading-clamp)]'>
-					Typography Scale Comparison
-				</h3>
-
-				<div className='grid gap-[var(--spacing-lg-clamp)] md:grid-cols-2'>
-					{/* Clamp Examples */}
-					<div className='border-foreground/10 rounded-lg border p-[var(--spacing-md-clamp)]'>
-						<h4 className='font-display mb-[var(--spacing-sm-clamp)] text-[length:var(--font-size-heading-clamp)]'>
-							Clamp Mode
-						</h4>
-						<div className='space-y-[var(--spacing-sm-clamp)]'>
-							<div>
-								<p className='text-foreground/60 mb-2 text-[length:var(--font-size-small-clamp)]'>
-									Display Size:
-								</p>
-								<p className='font-display text-[length:var(--font-size-display-clamp)] leading-none'>
-									Aa
-								</p>
-							</div>
-							<div>
-								<p className='text-foreground/60 mb-2 text-[length:var(--font-size-small-clamp)]'>
-									Heading Size:
-								</p>
-								<p className='font-display text-[length:var(--font-size-heading-clamp)] leading-none'>
-									Aa
-								</p>
-							</div>
-							<div>
-								<p className='text-foreground/60 mb-2 text-[length:var(--font-size-small-clamp)]'>
-									Body Size:
-								</p>
-								<p className='text-[length:var(--font-size-body-clamp)]'>
-									The quick brown fox jumps over the lazy dog.
-								</p>
-							</div>
-							<div>
-								<p className='text-foreground/60 mb-2 text-[length:var(--font-size-small-clamp)]'>
-									Small Size:
-								</p>
-								<p className='text-[length:var(--font-size-small-clamp)]'>
-									Caption text and metadata information.
-								</p>
-							</div>
-						</div>
-					</div>
-
-					{/* Fluid Examples */}
-					<div className='border-foreground/10 rounded-lg border p-[var(--spacing-md-fluid)]'>
-						<h4 className='font-display mb-[var(--spacing-sm-fluid)] text-[length:var(--font-size-heading-fluid)]'>
-							Fluid Mode
-						</h4>
-						<div className='space-y-[var(--spacing-sm-fluid)]'>
-							<div>
-								<p className='text-foreground/60 mb-2 text-[length:var(--font-size-small-fluid)]'>
-									Display Size:
-								</p>
-								<p className='font-display text-[length:var(--font-size-display-fluid)] leading-none'>
-									Aa
-								</p>
-							</div>
-							<div>
-								<p className='text-foreground/60 mb-2 text-[length:var(--font-size-small-fluid)]'>
-									Heading Size:
-								</p>
-								<p className='font-display text-[length:var(--font-size-heading-fluid)] leading-none'>
-									Aa
-								</p>
-							</div>
-							<div>
-								<p className='text-foreground/60 mb-2 text-[length:var(--font-size-small-fluid)]'>
-									Body Size:
-								</p>
-								<p className='text-[length:var(--font-size-body-fluid)]'>
-									The quick brown fox jumps over the lazy dog.
-								</p>
-							</div>
-							<div>
-								<p className='text-foreground/60 mb-2 text-[length:var(--font-size-small-fluid)]'>
-									Small Size:
-								</p>
-								<p className='text-[length:var(--font-size-small-fluid)]'>
-									Caption text and metadata information.
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* Spacing Examples */}
-			<section className='border-foreground/10 border-t pt-[var(--spacing-lg-clamp)]'>
-				<h3 className='font-display mb-[var(--spacing-lg-clamp)] text-[length:var(--font-size-heading-clamp)]'>
-					Spacing System
-				</h3>
-
-				<div className='space-y-[var(--spacing-md-clamp)]'>
-					<div>
-						<h4 className='font-display mb-[var(--spacing-sm-clamp)] text-[length:var(--font-size-body-clamp)]'>
-							Clamp Spacing (Predictable)
-						</h4>
-						<div className='flex flex-wrap items-end gap-[var(--spacing-xs-clamp)]'>
-							<div className='bg-foreground/10 flex h-[var(--spacing-xs-clamp)] w-24 items-end justify-center pb-1'>
-								<span className='text-[length:var(--font-size-small-clamp)]'>
-									XS
-								</span>
-							</div>
-							<div className='bg-foreground/10 flex h-[var(--spacing-sm-clamp)] w-24 items-end justify-center pb-1'>
-								<span className='text-[length:var(--font-size-small-clamp)]'>
-									SM
-								</span>
-							</div>
-							<div className='bg-foreground/10 flex h-[var(--spacing-md-clamp)] w-24 items-end justify-center pb-1'>
-								<span className='text-[length:var(--font-size-small-clamp)]'>
-									MD
-								</span>
-							</div>
-							<div className='bg-foreground/10 flex h-[var(--spacing-lg-clamp)] w-24 items-end justify-center pb-1'>
-								<span className='text-[length:var(--font-size-small-clamp)]'>
-									LG
-								</span>
-							</div>
-						</div>
-					</div>
-
-					<div>
-						<h4 className='font-display mb-[var(--spacing-sm-fluid)] text-[length:var(--font-size-body-fluid)]'>
-							Fluid Spacing (Dramatic)
-						</h4>
-						<div className='flex flex-wrap items-end gap-[var(--spacing-xs-fluid)]'>
-							<div className='bg-foreground/20 flex h-[var(--spacing-xs-fluid)] w-24 items-end justify-center pb-1'>
-								<span className='text-[length:var(--font-size-small-fluid)]'>
-									XS
-								</span>
-							</div>
-							<div className='bg-foreground/20 flex h-[var(--spacing-sm-fluid)] w-24 items-end justify-center pb-1'>
-								<span className='text-[length:var(--font-size-small-fluid)]'>
-									SM
-								</span>
-							</div>
-							<div className='bg-foreground/20 flex h-[var(--spacing-md-fluid)] w-24 items-end justify-center pb-1'>
-								<span className='text-[length:var(--font-size-small-fluid)]'>
-									MD
-								</span>
-							</div>
-							<div className='bg-foreground/20 flex h-[var(--spacing-lg-fluid)] w-24 items-end justify-center pb-1'>
-								<span className='text-[length:var(--font-size-small-fluid)]'>
-									LG
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* Usage Guide */}
-			<section className='border-foreground/10 mt-[var(--spacing-xl-clamp)] border-t pt-[var(--spacing-lg-clamp)]'>
-				<h3 className='font-display mb-[var(--spacing-md-clamp)] text-[length:var(--font-size-heading-clamp)]'>
-					How to Use
-				</h3>
-				<div className='max-w-3xl space-y-[var(--spacing-sm-clamp)] text-[length:var(--font-size-body-clamp)]'>
-					<p>
-						<strong>Clamp Mode:</strong> Use{' '}
-						<code className='bg-foreground/10 rounded px-2 py-1'>
-							text-[length:var(--font-size-display-clamp)]
-						</code>{' '}
-						for predictable, bounded scaling. Great for maintaining readability
-						and design consistency.
-					</p>
-					<p>
-						<strong>Fluid Mode:</strong> Use{' '}
-						<code className='bg-foreground/10 rounded px-2 py-1'>
-							text-[length:var(--font-size-display-fluid)]
-						</code>{' '}
-						for dramatic, viewport-dependent effects. Perfect for hero sections
-						and bold design statements.
-					</p>
-					<p className='text-foreground/60 text-[length:var(--font-size-small-clamp)]'>
-						💡 Tip: Mix and match both modes in the same design. Use clamp for
-						body text and UI elements, fluid for headlines and feature sections.
+function TopSection() {
+	return (
+		<div className='top-section p-[40px]'>
+			<h1 className='text-display-fluid font-display max-w-[8ch] leading-[0.9] tracking-[-6.4px] text-[#E8E8E8] uppercase'>
+				The Future is Foggy
+			</h1>
+			<Crosses />
+			<div className='grid gap-8 pt-8 md:grid-cols-12'>
+				<div className='col-span-6'>
+					<img
+						src='/imgs/img-1.jpg'
+						className='aspect-714/856 w-full object-cover'
+					/>
+					<p className='text-small-clamp pt-4 font-mono tracking-[-0.95px] text-[#E8E8E8]'>
+						Los Angeles, CA | 2018
 					</p>
 				</div>
-			</section>
+				<div className='col-span-6 col-start-7 flex flex-col items-end'>
+					<img
+						src='/imgs/img-2.jpg'
+						className='aspect-714/416 w-full object-cover'
+					/>
+					<p className='text-small-clamp pt-4 font-mono tracking-[-0.95px] text-[#E8E8E8]'>
+						Ottawa Downtown | 2022
+					</p>
+				</div>
+				<div className='relative col-span-9 col-start-4'>
+					<img src='/imgs/img-3.jpg' className='w-full object-cover' />
+					<p className='text-small-clamp absolute top-[-36px] right-0 font-mono tracking-[-0.95px] text-[#E8E8E8]'>
+						Ottawa Downtown | 2022
+					</p>
+				</div>
+			</div>
+			<Crosses />
+		</div>
+	);
+}
+
+function Crosses() {
+	return (
+		<div className='flex justify-between pt-[100px]'>
+			{Array.from({ length: 3 }).map((_, index) => (
+				<img
+					key={index}
+					src='/imgs/cross.svg'
+					className='size-[16px] text-[#E8E8E8]'
+				/>
+			))}
+		</div>
+	);
+}
+
+function BottomSection() {
+	return (
+		<div className='bottom-section bg-[#E6E6E6] p-[40px]'>
+			<h2 className='text-display-fluid font-display max-w-[8ch] leading-[0.9] tracking-[-6.4px] text-[#323334] uppercase'>
+				<span>GET IN</span>
+				<span className='flex gap-8'>
+					<img src='/imgs/fat-line.svg' className='w-[348px]' />{' '}
+					<span>TOUCH</span>
+				</span>
+			</h2>
+			<div className='grid grid-cols-12 gap-4 pt-[152px]'>
+				<img src='/imgs/img-4.jpg' className='aspect- col-span-4 col-start-2' />
+				<div className="col-start-7 col-span-6">
+					<h2 className='text-heading-clamp font-heading leading-[0.9] tracking-[0px] text-[#323334] font-[900]'>
+						We'd love to become your trusted photo studio—the team you turn to
+						for life's important moments.
+					</h2>
+					<p className='text-body-clamp font-mono leading-[1.05] tracking-[-0.95px] text-[#323334] pt-4'>
+						Our door is always open for a conversation. No project is too small
+						or too ambitious, and we believe the best shoots start with
+						understanding exactly what you're looking for. We'll work with you
+						to create a custom package that makes sense for your needs and
+						budget, with no surprises along the way.
+					</p>
+				</div>
+			</div>
 		</div>
 	);
 }
