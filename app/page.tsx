@@ -1,14 +1,100 @@
+'use client';
+import { useEffect, useRef } from 'react';
 import { LenisProvider } from './lenis-provider';
+import { useScroll, useTransform, useMotionValue, motion } from 'motion/react';
 
 export default function Page() {
 	return (
 		<LenisProvider>
 			<div className='min-h-svh bg-[#222222]'>
+				<BackgroundGrain />
+				<ProgressiveBlur />
 				<TopSection />
 				<BottomSection />
 			</div>
 		</LenisProvider>
 	);
+}
+
+function ProgressiveBlur() {
+	const { scrollY } = useScroll();
+	const rafRef = useRef<number | null>(null);
+
+	const opacities = [
+		useMotionValue(0.05),
+		useMotionValue(0.05),
+		useMotionValue(0.05),
+		useMotionValue(0.05),
+		useMotionValue(0.05),
+	];
+
+	const smoothOpacity = () => {
+		const threshold = 0.1;
+		let allSettled = true;
+
+		opacities.forEach(opacity => {
+			const current = opacity.get();
+			const target = 0.05;
+			if (Math.abs(current - target) < threshold) {
+				opacity.set(target);
+			} else if (current > target) {
+				opacity.set(current - (current - target) * 0.2);
+				allSettled = false;
+			}
+		});
+		if (!allSettled) {
+			rafRef.current = requestAnimationFrame(smoothOpacity);
+		} else {
+			rafRef.current = null;
+		}
+	};
+
+	useEffect(() => {
+		const unsubscribe = scrollY.on('change', latest => {
+			const prev = scrollY.getPrevious() || 0;
+			const delta = Math.abs(latest - prev);
+
+			opacities.forEach((opacity, index) => {
+				const current = opacity.get();
+				const multiplier = 0.01 * (index + 1);
+				const easedMultiplier = multiplier * (1 - current);
+				const newValue = Math.min(current + delta * easedMultiplier, 0.95);
+				opacity.set(newValue);
+			});
+
+			if (rafRef.current) {
+				cancelAnimationFrame(rafRef.current);
+				rafRef.current = null;
+			}
+
+			setTimeout(() => {
+				if (!rafRef.current) smoothOpacity();
+			}, 150);
+		});
+
+		return () => {
+			unsubscribe();
+			if (rafRef.current) cancelAnimationFrame(rafRef.current);
+		};
+	}, [scrollY]);
+
+	return (
+		<div className='progressive-blur pointer-events-none fixed inset-0 z-10'>
+			<div className='absolute bottom-0 left-0 w-full h-70'>
+				{opacities.reverse().map((opacity, index) => (
+					<motion.div
+						key={index}
+						className={`blur-layer absolute bottom-0 left-0 w-full h-full blur-layer-${index + 1}`}
+						style={{ opacity }}
+					/>
+				))}
+			</div>
+		</div>
+	);
+}
+
+function BackgroundGrain() {
+	return <div className='background-grain' />;
 }
 
 function TopSection() {
@@ -75,12 +161,12 @@ function BottomSection() {
 			</h2>
 			<div className='grid grid-cols-12 gap-4 pt-[152px]'>
 				<img src='/imgs/img-4.jpg' className='aspect- col-span-4 col-start-2' />
-				<div className="col-start-7 col-span-6">
-					<h2 className='text-heading-clamp font-heading leading-[0.9] tracking-[0px] text-[#323334] font-[900]'>
+				<div className='col-span-6 col-start-7'>
+					<h2 className='text-heading-clamp font-heading leading-[0.9] font-[900] tracking-[0px] text-[#323334]'>
 						We'd love to become your trusted photo studio—the team you turn to
 						for life's important moments.
 					</h2>
-					<p className='text-body-clamp font-mono leading-[1.05] tracking-[-0.95px] text-[#323334] pt-4'>
+					<p className='text-body-clamp pt-4 font-mono leading-[1.05] tracking-[-0.95px] text-[#323334]'>
 						Our door is always open for a conversation. No project is too small
 						or too ambitious, and we believe the best shoots start with
 						understanding exactly what you're looking for. We'll work with you
